@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Reply-Engine - Rive</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css'><link rel="stylesheet" href="./style.css">
+  <script type="text/javascript" src="https://unpkg.com/rivescript@latest/dist/rivescript.min.js"></script>
+</head>
+<body>
+<!-- partial:index.partial.html -->
+  <div class="center">
+    <div class="contacts">
+      <i class="fas fa-bars fa-2x"></i>
+      <h2>
+        Contacts
+      </h2>
+      <div class="contact">
+        <div class="pic alita"></div>
+        <div class="badge">
+          @
+        </div>
+        <div class="name">
+          Alita
+        </div>
+        <div class="message">
+          Chat with Alita
+        </div>
+      </div>
+    </div>
+    <div class="chat">
+      <div class="contact bar">
+        <div class="pic alita"></div>
+        <div class="name">
+          Alita
+        </div>
+        <div class="seen">
+          Always up !
+        </div>
+      </div>
+      <div class="messages" id="chat">
+
+        <div id="dialogue"></div>
+      </div>
+
+      <form onSubmit="return sendMessage()">
+        <div class="input">
+          <i class="fas fa-camera"></i><i class="far fa-laugh-beam"></i><input name="message" id="message" autocomplete="off" disabled placeholder="Please wait... loading..."/><i class="fas fa-microphone"></i>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script><script  src="./script.js"></script>
+  <script type="text/javascript">
+
+    // Warn the user if they opened the page locally that it will probably
+    // experience ajax errors.
+    if (window.location.protocol === "file:") {
+      document.querySelector("#local-file-error").style.display = "block";
+    }
+
+    // Problem loading rivescript.js
+    var rs;
+    if (window.RiveScript === undefined) {
+      document.querySelector("#webpack-error").style.display = "block";
+    } else {
+      // Create our RiveScript interpreter.
+      rs = new RiveScript({});
+
+      // This won't work on the web!
+      //rs.loadDirectory("brain");
+
+      // Load our files from the brain/ folder.
+      rs.loadFile([
+        "../brain/begin.rive",
+        "../brain/admin.rive",
+        "../brain/clients.rive",
+        "../brain/eliza.rive",
+        "../brain/myself.rive",
+        "../brain/rpg.rive",
+        "../brain/javascript.rive"
+      ]).then(onReady).catch(onError);
+
+      // You can register objects that can then be called
+      // using <call></call> syntax
+      rs.setSubroutine('fancyJSObject', function(rs, args){
+        // doing complex stuff here
+      });
+    }
+
+    function onReady() {
+      $("#dialogue").append("<div class='message stark'>Hey, I'm Alita. Your personal chatbot.</div>");
+      $("#message").removeAttr("disabled");
+      $("#message").attr("placeholder", "Send message");
+      $("#message").focus();
+
+      // Now to sort the replies!
+      rs.sortReplies();
+    }
+
+    function onError(err, filename, lineno) {
+      $("#dialogue").append('<div class="message stark"> ' + err + '</div>');
+    }
+
+    // Handle sending a message to the bot.
+    function sendMessage () {
+      var text = $("#message").val();
+      $("#message").val("");
+      $("#dialogue").append("<div class='message parker'>" + text + "</div>");
+
+      rs.reply("soandso", text, this).then(function(reply) {
+        reply = reply.replace(/\n/g, "<br>");
+        $("#dialogue").append("<div class='message stark'> " + reply + "</div>");
+        $("#dialogue").animate({ scrollTop: $("#dialogue").height() }, 1000);
+      }).catch(function(e) {
+        window.alert(e.message + "\n" + e.line);
+        console.log(e);
+      });
+
+      return false;
+    }
+    </script>
+
+</body>
+</html>
