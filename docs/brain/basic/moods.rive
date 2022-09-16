@@ -8,14 +8,16 @@
   % [say sorry] [apologize to me] [*]
   * <get chance> == 1 => <set chance=2> This is the second time! Do it again, I won't talk to you. {topic=begin}
   * <get chance> == 2 => <set chance=0> I'm not talking to you. {topic=end}
-  - <set chance=1> Okay don't do that again! {topic=begin}
+  - <set chance=1> <set repeat=0> Okay, don't do that again! {topic=begin}
 
   + *
+  * <get chance> == 1 => <set chance=0> Done with you. {topic=end}
   * <get repeat> == 0 => <set repeat=1> Say sorry!
   * <get repeat> == 1 => <set repeat=2> Apologize to me!
   * <get repeat> == 2 => <set repeat=0> bye! {topic=end}
 
   + (why should i|why|wtf|what)
+  % (say sorry|apologize to me)
   * <get repeat> == 0 => <set repeat=1> For playing around with me
   * <get repeat> == 1 => <set repeat=2> I don't repeat myself!
   * <get repeat> == 2 => <set repeat=0> bye! {topic=end}
