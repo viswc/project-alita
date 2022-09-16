@@ -15,7 +15,7 @@
   * <get repeat> == 1 => <set repeat=2> Apologize to me!
   * <get repeat> == 2 => <set repeat=0> bye! {topic=end}
 
-  + (why should i|why|wtf|?|what)
+  + (why should i|why|wtf|what)
   * <get repeat> == 0 => <set repeat=1> For playing around with me
   * <get repeat> == 1 => <set repeat=2> I don't repeat myself!
   * <get repeat> == 2 => <set repeat=0> bye! {topic=end}
