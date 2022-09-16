@@ -1,0 +1,30 @@
++ (hi|hello|hey)
+- Hey! {topic=begin}
+
+> topic begin
+
+	+ (hi|hello|hey|greetings)
+	* <get chance> == 1 => <set chance=2> You've already annoyed me lol! {topic=angry}
+	* <get repeat> == 1 => <set repeat=2> Come on!.
+	* <get repeat> == 2 => <set repeat=0> Stop being annoying! {topic=angry}
+	- <set repeat=1> Hey... ???
+
+	+ [you are] [name] [who are you] [what is your name] [your name] [you]
+	* <get met> == undefined => <set met=1>I'm alita, what's yours ?
+	* <get repeat> == 1 => <set repeat=2> Come on! It's Alita.
+	* <get repeat> == 2 => <set repeat=0> I'm done! {topic=angry}
+	- <set repeat=1>I've already told you. I'm alita.
+
+
+	+ [my name is] [myself] [call me] [i am] _
+	% (i am alita what is yours|come on it is alita|i have already told you i am alita)
+	* <get namechange> == 1 =><set name=<star1>> <set namechange=2>How many times will you change your name!
+	* <get namechange> == 2 =>I'm done with your names! {topic=end}
+	* <get name> == undefined => <set name=<star1>>Okay, nice to meet you <star1>.
+	* <get name> == <bot name> => <set name=<star1>>Wow, my name is also <star1>.
+	* <get name> != <get name> => <set oldname=<get name>> <set name=<star1>> <set namechange=1>but you told me your name is <get oldname>?
+	* <get name> == <get name> => <set repeat=1> You already told me buddy.
+	* <get repeat> == 1 => <set repeat=2> Stop repeating yourself!
+	* <get repeat> == 2 => <set repeat=0> I'm not talking anymore. {topic=angry}
+
+< topic

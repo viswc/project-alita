@@ -1,0 +1,2 @@
++ (add|sum|plus) # (and|nd|plus) #
+- <set math_number=<star2>+<star4>> It's, <get math_number>.

@@ -74,13 +74,10 @@
 
       // Load our files from the brain/ folder.
       rs.loadFile([
-        "brain/begin.rive",
-        "brain/admin.rive",
-        "brain/clients.rive",
-        "brain/eliza.rive",
-        "brain/myself.rive",
-        "brain/rpg.rive",
-        "brain/javascript.rive"
+        "brain/awareness/variables.rive",
+        "brain/logistics/maths.rive",
+        "brain/basic/begin.rive",
+        "brain/basic/moods.rive"
       ]).then(onReady).catch(onError);
 
       // You can register objects that can then be called
@@ -91,7 +88,7 @@
     }
 
     function onReady() {
-      $("#dialogue").append("<div class='message stark'>Hey, I'm Alita. Your personal chatbot.</div>");
+      $("#dialogue").append("<div class='message stark'>Hey!</div>");
       $("#message").removeAttr("disabled");
       $("#message").attr("placeholder", "Send message");
       $("#message").focus();
